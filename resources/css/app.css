@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    table {
+        @apply table-auto w-full
+    }
+    thead {
+        @apply text-xs font-semibold uppercase text-gray-400 bg-gray-50
+    }
+    th {
+        @apply p-2 whitespace-nowrap font-semibold text-left
+    }
+
+    td {
+        @apply p-2 whitespace-nowrap
+    }
+}
+
+@layer components {
+    .table {
+        @apply w-full lg:w-1/2 mx-auto bg-white shadow-lg rounded-md border border-gray-200 p-3
+    }
+}
