@@ -21,6 +21,11 @@
                         {{ __('Usuarios') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
+                        {{ __('Categorías') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -147,6 +152,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('users') }}" :active="request()->routeIs('users')">
                 {{ __('Usuarios') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('categories') }}" :active="request()->routeIs('categories')">
+                {{ __('Categorías') }}
             </x-responsive-nav-link>
         </div>
 
