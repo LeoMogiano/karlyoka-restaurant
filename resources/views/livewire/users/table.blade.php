@@ -1,4 +1,3 @@
-<div class="flex flex-col justify-center h-full">
     <div class="table">
         <div class="overflow-x-auto">
             <table>
@@ -12,7 +11,7 @@
                 <tbody class="text-sm divide-y divide-gray-100">
                 @foreach ($users as $user)
                     <tr>
-                    
+
                         <td>
                             <div class="text-left">{{ $user->email }}</div>
                         </td>
@@ -25,11 +24,10 @@
                         <td>
                             <div class="text-left">{{ $user->rol }}</div>
                         </td>
-                    
+
                     </tr>
                 @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-</div>
