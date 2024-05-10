@@ -39,8 +39,14 @@ class Create extends Component
         $this->validate();
         $this->user->password = Hash::make($this->password);
         $this->user->save();
-        $this->isOpen = false;
-
         $this->emit('user-created');
+        $this->resetFields();
+    }
+
+    public  function resetFields()
+    {
+        $this->isOpen = false;
+        $this->password = '';
+        $this->user = new User();
     }
 }
