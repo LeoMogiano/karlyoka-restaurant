@@ -16,6 +16,8 @@ class Table extends Component
 
     public $users = [];
 
+    protected $listeners = ['user-created' => 'userCreated'];
+
     public function mount()
     {
         $this->users = User::all();
@@ -24,5 +26,11 @@ class Table extends Component
     public function render()
     {
         return view('livewire.users.table');
+    }
+
+    public function userCreated()
+    {
+        $this->users = User::all();
+
     }
 }

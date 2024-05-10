@@ -40,5 +40,7 @@ class Create extends Component
         $this->user->password = Hash::make($this->password);
         $this->user->save();
         $this->isOpen = false;
+
+        $this->emit('user-created');
     }
 }
