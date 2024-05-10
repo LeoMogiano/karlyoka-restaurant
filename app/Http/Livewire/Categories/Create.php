@@ -30,14 +30,21 @@ class Create extends Component
     {
         $this->validate();
         $this->category->save();
+        $this->clearForm();
         $this->isOpen = false;
         $this->emit('category-created');
-        
     }
 
     public function toogleForm()
     {
         $this->isOpen = !$this->isOpen;
+    }
+
+    public function clearForm()
+    {
+        $this->category = new Categoria();
+        $this->category->nombre = ''; 
+        $this->category->descripcion = ''; 
     }
 
 }

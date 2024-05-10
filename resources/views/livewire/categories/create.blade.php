@@ -1,7 +1,7 @@
 <div>
     <x-dialog-modal wire:model="isOpen">
         <x-slot name="title">
-            Crear usuario
+            Crear categoría
         </x-slot>
 
         <x-slot name="content">
