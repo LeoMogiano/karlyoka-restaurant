@@ -15,6 +15,8 @@ class Table extends Component
 
     public $categories = [];
 
+    protected $listeners = ['category-created' => 'mount'];
+
     public function mount()
     {
         $this->categories = Categoria::all();

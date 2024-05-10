@@ -1,4 +1,4 @@
-<div class="flex flex-col justify-center h-full">
+
     <div class="table">
         <div class="overflow-x-auto">
             <table>
@@ -24,4 +24,4 @@
             </table>
         </div>
     </div>
-</div>
+
