@@ -2,7 +2,7 @@
 
     <div class="flex justify-between">
         <h2 class="text-2xl font-bold">{{'Usuarios'}}</h2>
-        <x-button wire:click="$emit('open-form')">
+        <x-button wire:click="$emit('open-form', null)">
             {{'Crear'}}
         </x-button>
     </div>

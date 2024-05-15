@@ -1,7 +1,7 @@
 <div>
     <x-dialog-modal wire:model="isOpen">
         <x-slot name="title">
-            Crear usuario
+            {{ $action == \App\Enums\ActionType::Create->value ? 'Crear usuario' : 'Actualizar usuario' }}
         </x-slot>
 
         <x-slot name="content">
@@ -50,7 +50,7 @@
                 </x-secondary-button>
 
                 <x-button wire:click="save" wire:loading.attr="disabled" autofocus>
-                    Crear
+                    {{ $action == \App\Enums\ActionType::Create->value ? 'Crear' : 'Actualizar' }}
                 </x-button>
             </div>
         </x-slot>

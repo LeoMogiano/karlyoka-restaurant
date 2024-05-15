@@ -2,15 +2,17 @@
 
 namespace App\Http\Livewire\Users;
 
+use App\Enums\ActionType;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
-class Create extends Component
+class CreateOrUpdate extends Component
 {
     public $isOpen = false;
     public User $user;
     public $password;
+    public $action = ActionType::Create;
 
     protected $listeners = ['open-form' => 'openForm'];
     protected $rules = [
@@ -24,22 +26,43 @@ class Create extends Component
     {
         $this->user = new User();
     }
+
     public function render()
     {
-        return view('livewire.users.create');
+        return view('livewire.users.create-or-update');
     }
 
-    public function openForm()
+    public function openForm($userId)
     {
+        if ($userId) {
+            $this->user = User::where('id', $userId)->firstOrFail();
+            $this->action = ActionType::Update->value;
+        } else {
+            $this->user = new User();
+            $this->action = ActionType::Create->value;
+        }
+
+        $this->resetErrorBag();
+        $this->password = null;
         $this->isOpen = true;
+
+
     }
 
     public function save()
     {
+        if ($this->action == ActionType::Update->value && $this->user->id) {
+            $this->rules['user.email'] =  'required|string|email|max:255|unique:users,email,'.$this->user->id;
+            $this->rules['password'] =  'nullable|string|min:8|max:255';
+        }
+
         $this->validate();
-        $this->user->password = Hash::make($this->password);
+        if ($this->password) {
+            $this->user->password = Hash::make($this->password);
+        }
+
         $this->user->save();
-        $this->emit('user-created');
+        $this->emit('user-saved');
         $this->resetFields();
     }
 
@@ -47,6 +70,7 @@ class Create extends Component
     {
         $this->isOpen = false;
         $this->password = '';
+        $this->resetErrorBag();
         $this->user = new User();
     }
 }
