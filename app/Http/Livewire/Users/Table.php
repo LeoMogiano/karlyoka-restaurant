@@ -18,7 +18,7 @@ class Table extends Component
     public $users = [];
     public $confirmDeletionIsOpen = false;
     public $userSelected = null;
-    protected $listeners = ['user-created' => 'userCreated'];
+    protected $listeners = ['user-saved' => 'userCreated'];
 
 
     public function mount()
