@@ -7,8 +7,8 @@
                         @foreach ($columns as $column)
                             <th>{{ $column }}</th>
                         @endforeach
+                        <th>{{'Acciones'}}</th>
                     </tr>
-                    <th>{{'Acciones'}}</th>
                 </thead>
                 <tbody class="text-sm divide-y divide-gray-100">
                     @foreach ($categories as $category)
