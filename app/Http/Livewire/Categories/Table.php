@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Categories;
 
 use App\Models\Categoria;
-use App\Models\User;
 use Livewire\Component;
 
 class Table extends Component
@@ -14,9 +13,11 @@ class Table extends Component
     ];
 
     public $categories = [];
+
     public $confirmDeletionIsOpen = false;
     public $categorySelected = null;
-    protected $listeners = ['category-created' => 'mount'];
+
+    protected $listeners = ['category-saved' => 'mount'];
 
     public function mount()
     {

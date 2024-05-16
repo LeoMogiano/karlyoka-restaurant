@@ -1,7 +1,7 @@
 <div>
     <x-dialog-modal wire:model="isOpen">
         <x-slot name="title">
-            Crear categoría
+            {{ $action == \App\Enums\ActionType::Create->value ? 'Crear categoría' : 'Actualizar categoría' }}
         </x-slot>
 
         <x-slot name="content">
@@ -20,12 +20,12 @@
         </x-slot>
         <x-slot name="footer">
             <div class="space-x-2">
-                <x-secondary-button wire:click="$emit('toogle-form')" wire:loading.attr="disabled">
+                <x-secondary-button wire:click="$toggle('isOpen')" wire:loading.attr="disabled">
                     Cancelar
                 </x-secondary-button>
 
                 <x-button wire:click="save" wire:loading.attr="disabled" autofocus>
-                    Crear
+                    {{ $action == \App\Enums\ActionType::Create->value ? 'Crear' : 'Actualizar' }}
                 </x-button>
             </div>
         </x-slot>
