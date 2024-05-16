@@ -22,8 +22,8 @@
                     <x-label value="Rol"></x-label>
                     <select wire:model="user.rol">
                         <option value="{{null}}">{{'Selecciona una opción'}}</option>
-                        <option value="cajero">{{'Cajero'}}</option>
-                        <option value="dueño">{{'Dueño'}}</option>
+                        <option value="{{\App\enums\UserType::Cajero}}">{{'Cajero'}}</option>
+                        <option value="{{\App\enums\UserType::Administrador}}">{{'Administrador'}}</option>
                     </select>
                     @error('user.rol') <span class="error">{{ $message }}</span> @enderror
                 </div>

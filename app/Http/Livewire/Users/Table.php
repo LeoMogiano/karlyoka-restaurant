@@ -18,7 +18,10 @@ class Table extends Component
     public $users = [];
     public $confirmDeletionIsOpen = false;
     public $userSelected = null;
-    protected $listeners = ['user-saved' => 'userCreated'];
+    protected $listeners = [
+        'user-saved' => 'userCreated',
+        'user-search' => 'searchUser'
+    ];
 
 
     public function mount()
@@ -36,10 +39,25 @@ class Table extends Component
         $this->loadAllUsers();
     }
 
-    public function loadAllUsers()
+    public function searchUser($searchText)
+    {
+        $this->loadAllUsers($searchText);
+    }
+
+    public function loadAllUsers($searchText = null)
     {
         $id = Auth::id();
-        $this->users = User::where('id', '!=', $id)->get();
+        if ($searchText) {
+            $this->users = User::where('id', '!=', $id)
+                ->where(function($query) use ($searchText) {
+                    $query->where('name', 'like', "%$searchText%")
+                        ->orWhere('apellidos', 'like', "%$searchText%")
+                        ->orWhere('email', 'like', "%$searchText%");
+                })
+                ->get();
+        } else {
+            $this->users = User::where('id', '!=', $id)->get();
+        }
     }
 
     public function deleteUser($user)
