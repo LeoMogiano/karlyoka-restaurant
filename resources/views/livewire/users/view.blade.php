@@ -8,5 +8,5 @@
     </div>
 
     <livewire:users.table/>
-    <livewire:users.create/>
+    <livewire:users.create-or-update/>
 </div>
