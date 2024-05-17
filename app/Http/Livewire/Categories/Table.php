@@ -17,11 +17,21 @@ class Table extends Component
     public $confirmDeletionIsOpen = false;
     public $categorySelected = null;
 
-    protected $listeners = ['category-saved' => 'mount'];
+    protected $listeners = [
+        'category-saved' => 'mount',
+        'category-search' => 'searchCategories',
+    ];
 
-    public function mount()
+    public function searchCategories($searchText) {
+        $this->mount($searchText);
+    }
+
+    public function mount($searchText = null)
     {
-        $this->categories = Categoria::all();
+        $this->categories = Categoria::when($searchText, function ($query) use ($searchText) {
+            return $query->where('nombre', 'like', '%' . $searchText . '%')
+                         ->orWhere('descripcion', 'like', '%' . $searchText . '%');
+        })->get();
     }
 
     public function deleteCategory($category)
