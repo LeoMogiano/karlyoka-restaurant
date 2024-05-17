@@ -11,7 +11,7 @@ class Table extends Component
     public $columns = [
         'nombre', 'descripcion', 
         'precio', 'stock',
-        'image_url', 'categoria_id'
+        'image_url', 'categoria'
     ];
 
     public $products = [];
