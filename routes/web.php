@@ -38,3 +38,9 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->get('/categories', \App\Http\Livewire\Categories\View::class)->name('categories');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->get('/products', \App\Http\Livewire\Products\View::class)->name('products');
