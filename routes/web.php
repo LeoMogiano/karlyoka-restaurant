@@ -44,3 +44,13 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->get('/products', \App\Http\Livewire\Products\View::class)->name('products');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->get('/orders', \App\Http\Livewire\Orders\View::class)->name('orders');
+
+
+
+
