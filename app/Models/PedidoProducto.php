@@ -10,7 +10,7 @@ class PedidoProducto extends Model
     use HasFactory;
 
 
-    protected $fillable = ['cantidad','precio_unitario','producto_id','pedido_id'];
+    protected $fillable = ['cantidad', 'subtotal' ,'producto_id' , 'pedido_id'];
 
 
     public function producto()

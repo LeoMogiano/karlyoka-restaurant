@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('pedido_producto', function (Blueprint $table) {
             $table->id();
             $table->integer('cantidad');
-            $table->float('precio_unitario');
+            $table->float('subtotal');
 
             $table->unsignedBigInteger('producto_id');
             $table->unsignedBigInteger('pedido_id');
