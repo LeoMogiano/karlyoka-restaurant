@@ -18,17 +18,10 @@ class CreateOrUpdate extends Component
 
     public $pedido_productos = [];
 
-
     protected $listeners = ['open-form' => 'openForm'];
 
     protected $rules = [
-
-        'order.nro' => 'required|integer|unique:pedidos,nr_pedido',
-        'order.fecha_recepcion' => 'required|date',
-        'order.fecha_entrega' => 'required|date',
-        'order.total' => 'required|numeric',
-        'order.user_id' => 'required|exists:users,id',
-
+        
     ];
 
     public function mount()
@@ -37,25 +30,31 @@ class CreateOrUpdate extends Component
         $this->order = new Pedido();
 
         foreach ($this->productsOptions as $product) {
-            $this->pedido_productos[$product->id] = 0; // Inicializar cantidades a 0
+            $this->pedido_productos[$product->id] = 0;
         }
+        
     }
 
-    public function incrementQuantity($productId)
+    public function incrementCount($productId, $increment = true)
     {
         if (!isset($this->pedido_productos[$productId])) {
             $this->pedido_productos[$productId] = 0;
         }
-        $this->pedido_productos[$productId]++;
-    }
-
-    public function decrementQuantity($productId)
-    {
-        if (isset($this->pedido_productos[$productId]) && $this->pedido_productos[$productId] > 0) {
-            $this->pedido_productos[$productId]--;
+    
+        if ($increment) {
+            $this->pedido_productos[$productId]++;
+        } else {
+            if ($this->pedido_productos[$productId] > 0) {
+                $this->pedido_productos[$productId]--;
+            }
+        }
+        $this->order->total = 0;    
+        foreach ($this->pedido_productos as $productId => $quantity) {
+            $product = Producto::find($productId);
+            $this->order->total += $product->precio * $quantity;
+            $this->pedido_productos[$productId] = $quantity;
         }
     }
-
 
     public function render()
     {
@@ -65,14 +64,41 @@ class CreateOrUpdate extends Component
     public function save()
     {
         if ($this->action == ActionType::Update->value && $this->order->id) {
-            $this->rules['order.nro'] = 'required|integer|unique:pedidos,nr_pedido,' . $this->order->id;
-            $this->rules['order.fecha_recepcion'] = 'required|date';
-            $this->rules['order.fecha_entrega'] = 'required|date';
-            $this->rules['order.total'] = 'required|numeric';
-            $this->rules['order.user_id'] = 'required|exists:users,id';
+
+            if ($this->order->total <= 0) {
+                return;
+            }
+           
+            $this->order->save();
+            $this->order->productos()->detach();
         }
-        $this->validate();
+        $this->order->total = 0;
+        foreach ($this->pedido_productos as $productId => $quantity) {
+            $product = Producto::find($productId);
+            $this->order->total += $product->precio * $quantity;
+        }
+
+        if($this->order->total <= 0) {
+            return;
+        }
+
+        $this->order->nro = 'PED' . rand(100, 999) . chr(rand(65, 90)) . chr(rand(65, 90));
+        $this->order->fecha_recepcion = now();
+        $this->order->fecha_entrega = null;
+        $this->order->user_id = auth()->id();
         $this->order->save();
+        $this->order->nro = 'PED#' . $this->order->id;
+        $this->order->save();
+
+        foreach ($this->pedido_productos as $productId => $quantity) {
+            if ($quantity > 0) {
+                $this->order->productos()->attach($productId, [
+                    'cantidad' => $quantity,
+                    'subtotal' => Producto::find($productId)->precio * $quantity
+                ]);
+            }
+        }
+
         $this->isOpen = false;
         $this->emit('order-loaded');
         $this->resetFields();
@@ -82,10 +108,13 @@ class CreateOrUpdate extends Component
     {
         if ($orderId) {
             $this->order = Pedido::find($orderId);
-            $this->action = ActionType::Update->value;
+            $this->action = ActionType::Update->value;       
+            $this->pedido_productos = Pedido::with('productos')->find($orderId)->productos->pluck('pivot.cantidad', 'id')->toArray();
+
         } else {
             $this->order = new Pedido();
             $this->action = ActionType::Create->value;
+
         }
         $this->isOpen = true;
     }
@@ -93,6 +122,7 @@ class CreateOrUpdate extends Component
     public function resetFields()
     {
         $this->order = new Pedido();
+        $this->pedido_productos = [];
         $this->action = ActionType::Create;
         $this->resetErrorBag();
     }

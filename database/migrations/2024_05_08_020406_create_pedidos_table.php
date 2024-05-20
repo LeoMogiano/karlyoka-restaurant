@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
-            $table->integer('nro');
+            $table->string('nro');
             $table->dateTime('fecha_recepcion');
-            $table->dateTime('fecha_entrega');
+            $table->dateTime('fecha_entrega')->nullable();
             $table->float('total');
 
             $table->unsignedBigInteger('user_id');

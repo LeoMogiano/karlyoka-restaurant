@@ -13,12 +13,12 @@ class PedidoProducto extends Model
     protected $fillable = ['cantidad', 'subtotal' ,'producto_id' , 'pedido_id'];
 
 
-    public function producto()
+    public function productos()
     {
         return $this->belongsTo(Producto::class);
     }
 
-    public function pedido()
+    public function pedidos()
     {
         return $this->belongsTo(Pedido::class);
     }

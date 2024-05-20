@@ -20,10 +20,13 @@
                             <div class="text-left">{{ $order->fecha_recepcion }}</div>
                         </td>
                         <td>
-                            <div class="text-left">{{ $order->fecha_entrega }}</div>
+                            <div class="text-left">{{ $order->fecha_entrega ?? 'PEDIDO EN COLA' }}</div>
                         </td>
                         <td>
                             <div class="text-left">{{ $order->total }}</div>
+                        </td>
+                        <td>
+                            <div class="text-left">{{ $order->user->name }}</div>
                         </td>
                       {{--   <td>
                             <div class="text-left">{{ $product->image_url }}</div> 

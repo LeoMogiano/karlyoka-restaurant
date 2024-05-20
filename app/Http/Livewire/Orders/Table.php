@@ -9,7 +9,7 @@ class Table extends Component
 {
 
     public $columns = [
-        'id', 'nr_pedido', 'fecha_recepcion', 'fecha_entrega', 'total'
+        'nr_pedido', 'fecha_recepcion', 'fecha_entrega', 'total', 'usuario'
     ];
     public $orders = [];
 
@@ -24,7 +24,8 @@ class Table extends Component
     public function mount($searchText = null)
     {
         $this->orders =  Pedido::with('user')->when($searchText, function ($query, $searchText) {
-            return $query->where('nr_pedido', 'like', "%$searchText%")
+            
+            return $query->where('nro', 'like', "%$searchText%")
                 ->orWhere('fecha_recepcion', 'like', "%$searchText%")
                 ->orWhere('fecha_entrega', 'like', "%$searchText%")
                 ->orWhere('total', 'like', "%$searchText%")
@@ -36,23 +37,27 @@ class Table extends Component
     }
 
     public function deleteOrders($order)
-    {
-       if(!$this->confirmDeletionIsOpen) {
-            $this->confirmDeletionIsOpen = true;
-            $this->orderSelected = $order;
-            return;
-        } else {
-            Pedido::destroy($order->id);
-
-            $this->orders = $this->orders->reject(function ($item) use ($order) {
-                return $item->id == $order->id;
-            });
-
-            $this->orderSelected = null;
-            $this->confirmDeletionIsOpen = false;
+{
+    if(!$this->confirmDeletionIsOpen) {
+        $this->confirmDeletionIsOpen = true;
+        $this->orderSelected = $order;
+        return;
+    } else {
+        // Buscar el pedido en la base de datos antes de eliminarlo
+        $orderToDelete = Pedido::find($this->orderSelected['id']);
+        
+        if ($orderToDelete) {
+            $orderToDelete->delete();
         }
+        
+        $this->orders = $this->orders->reject(function ($item) use ($orderToDelete) {
+            return $item['id'] ==  $orderToDelete->id;
+        });
 
+        $this->orderSelected = null;
+        $this->confirmDeletionIsOpen = false;
     }
+}
 
 
     public function render()
