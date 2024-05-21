@@ -51,6 +51,10 @@ Route::middleware([
     'verified'
 ])->get('/orders', \App\Http\Livewire\Orders\View::class)->name('orders');
 
-
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->get('/invoices', \App\Http\Livewire\Invoices\View::class)->name('invoices');
 
 
