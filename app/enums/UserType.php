@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums;
+namespace app\Enums;
 
 enum UserType: string {
     case Cajero = 'cajero';
