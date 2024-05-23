@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Categories;
 
-use App\Enums\ActionType;
+use App\enums\ActionType;
 use App\Models\Categoria;
 use Livewire\Component;
 
