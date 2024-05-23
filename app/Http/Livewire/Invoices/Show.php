@@ -11,18 +11,25 @@ class Show extends Component
 public Factura $invoice;
     //public $invoice;
 
+    public $rules = [
+        'invoice.nit' => 'required|string|max:50',
+        'invoice.nombre' => 'required|string|max:255',
+    ];
+
     public function mount()
     {
         $this->invoice = new Factura();
     }
 
     // Escucha el evento 'show-invoice-details' y carga los detalles de la factura
-    protected $listeners = ['show-invoice-details' => 'openForm'];
+    protected $listeners = [
+        'show-invoice-details' => 'openForm'
+    ];
 
     // Método para cargar los detalles de la factura
     public function openForm($invoiceId)
     {
-
+// dd("test");
         if ($invoiceId) {
             $this->invoice = Factura::where('id', $invoiceId)->firstOrFail();
            
