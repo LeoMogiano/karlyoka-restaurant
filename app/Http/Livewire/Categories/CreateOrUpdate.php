@@ -60,8 +60,7 @@ class CreateOrUpdate extends Component
         $this->resetErrorBag();
         $this->category = new Categoria();
         $this->category->nombre = ''; 
-        $this->category->descripcion = ''; 
-        
+        $this->category->descripcion = '';    
     }
 
 }
