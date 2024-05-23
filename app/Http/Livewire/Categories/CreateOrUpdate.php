@@ -62,5 +62,4 @@ class CreateOrUpdate extends Component
         $this->category->nombre = ''; 
         $this->category->descripcion = '';    
     }
-
 }
