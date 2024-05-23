@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Orders;
 
-use App\Enums\ActionType;
+use App\enums\ActionType;
 use App\Models\Pedido;
 use App\Models\Producto;
 use Illuminate\Notifications\Action;
