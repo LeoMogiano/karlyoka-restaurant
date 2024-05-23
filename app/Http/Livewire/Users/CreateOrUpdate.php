@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire\Users;
 
-
-use App\Enums\ActionType as EnumsActionType;
+use App\Enums\ActionType;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -13,7 +12,7 @@ class CreateOrUpdate extends Component
     public $isOpen = false;
     public User $user;
     public $password;
-    public $action = EnumsActionType::Create;
+    public $action = ActionType::Create;
 
     protected $listeners = ['open-form' => 'openForm'];
     protected $rules = [
