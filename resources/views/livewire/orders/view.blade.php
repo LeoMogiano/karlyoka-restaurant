@@ -13,4 +13,5 @@
   
     <livewire:orders.table />
     <livewire:orders.create-or-update />
+    <livewire:invoices.create />
 </div>

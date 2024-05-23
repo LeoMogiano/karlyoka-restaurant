@@ -10,7 +10,6 @@ use Livewire\Component;
 
 class CreateOrUpdate extends Component
 {
-
     public $isOpen = false;
     public Pedido $order;
     public $action = ActionType::Create;
@@ -20,9 +19,7 @@ class CreateOrUpdate extends Component
 
     protected $listeners = ['open-form' => 'openForm'];
 
-    protected $rules = [
-        
-    ];
+    protected $rules = [];
 
     public function mount()
     {
@@ -32,7 +29,6 @@ class CreateOrUpdate extends Component
         foreach ($this->productsOptions as $product) {
             $this->pedido_productos[$product->id] = 0;
         }
-        
     }
 
     public function incrementCount($productId, $increment = true)
@@ -40,7 +36,7 @@ class CreateOrUpdate extends Component
         if (!isset($this->pedido_productos[$productId])) {
             $this->pedido_productos[$productId] = 0;
         }
-    
+
         if ($increment) {
             $this->pedido_productos[$productId]++;
         } else {
@@ -48,7 +44,7 @@ class CreateOrUpdate extends Component
                 $this->pedido_productos[$productId]--;
             }
         }
-        $this->order->total = 0;    
+        $this->order->total = 0;
         foreach ($this->pedido_productos as $productId => $quantity) {
             $product = Producto::find($productId);
             $this->order->total += $product->precio * $quantity;
@@ -64,21 +60,22 @@ class CreateOrUpdate extends Component
     public function save()
     {
         if ($this->action == ActionType::Update->value && $this->order->id) {
-
+            dd('in1');
             if ($this->order->total <= 0) {
                 return;
             }
-           
+
             $this->order->save();
             $this->order->productos()->detach();
         }
+
         $this->order->total = 0;
         foreach ($this->pedido_productos as $productId => $quantity) {
             $product = Producto::find($productId);
             $this->order->total += $product->precio * $quantity;
         }
 
-        if($this->order->total <= 0) {
+        if ($this->order->total <= 0) {
             return;
         }
 
@@ -94,7 +91,7 @@ class CreateOrUpdate extends Component
             if ($quantity > 0) {
                 $this->order->productos()->attach($productId, [
                     'cantidad' => $quantity,
-                    'subtotal' => Producto::find($productId)->precio * $quantity
+                    'subtotal' => Producto::find($productId)->precio * $quantity,
                 ]);
             }
         }
@@ -102,19 +99,19 @@ class CreateOrUpdate extends Component
         $this->isOpen = false;
         $this->emit('order-loaded');
         $this->resetFields();
+        ///here we create de invoice
+        $this->emit('create-invoice', $this->order->id);
     }
 
     public function openForm($orderId)
     {
         if ($orderId) {
             $this->order = Pedido::find($orderId);
-            $this->action = ActionType::Update->value;       
+            $this->action = ActionType::Update->value;
             $this->pedido_productos = Pedido::with('productos')->find($orderId)->productos->pluck('pivot.cantidad', 'id')->toArray();
-
         } else {
             $this->order = new Pedido();
             $this->action = ActionType::Create->value;
-
         }
         $this->isOpen = true;
     }
