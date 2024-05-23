@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Livewire\Users;
-require_once('../app/Enums/ActionType.php');
 
-use App\Enums\ActionType;
+use app\Enums\ActionType;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
