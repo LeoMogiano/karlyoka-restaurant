@@ -1,5 +1,6 @@
 {
     "name": "laravel/laravel",
+    "version": "v9.19.0",
     "type": "project",
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
