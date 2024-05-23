@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Users;
+require_once('../app/Enums/ActionType.php');
 
 use App\Enums\ActionType;
 use App\Models\User;
