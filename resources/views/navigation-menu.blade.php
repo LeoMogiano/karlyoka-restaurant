@@ -38,6 +38,11 @@
                         {{ __('Ordenes') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link href="{{ route('invoices') }}" :active="request()->routeIs('invoices')">
+                        {{ __('Facturas') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -189,6 +194,9 @@
 
             <x-responsive-nav-link href="{{ route('orders') }}" :active="request()->routeIs('orders')">
                 {{ __('Ordenes') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('invoices') }}" :active="request()->routeIs('invoices')">
+                {{ __('Facturas') }}
             </x-responsive-nav-link>
         </div>
 
