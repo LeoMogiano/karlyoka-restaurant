@@ -22,9 +22,9 @@
                             <td>
                                 <div class="text-left">{{ $product->precio }}</div>
                             </td>
-                            <td>
+{{--                             <td>
                                 <div class="text-left">{{ $product->stock }}</div>
-                            </td>
+                            </td> --}}
                             <td>
                                 <div class="text-left">{{ $product->image_url }}</div> 
                             <td>

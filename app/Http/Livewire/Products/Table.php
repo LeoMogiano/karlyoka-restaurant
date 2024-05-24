@@ -10,7 +10,7 @@ class Table extends Component
 {
     public $columns = [
         'nombre', 'descripcion', 
-        'precio', 'stock',
+        'precio',
         'image_url', 'categoria'
     ];
 
@@ -31,7 +31,6 @@ class Table extends Component
             return $query->where('nombre', 'like', "%$searchText%")
                 ->orWhere('descripcion', 'like', "%$searchText%")
                 ->orWhere('precio', 'like', "%$searchText%")
-                ->orWhere('stock', 'like', "%$searchText%")
                 ->orWhereHas('categoria', function ($query) use ($searchText) {
                     $query->where('nombre', 'like', "%$searchText%");
                 });

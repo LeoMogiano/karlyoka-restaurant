@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre', 30);
             $table->string('descripcion', 50);
-            $table->integer('stock', false);
+            /* $table->integer('stock', false); */
             $table->float('precio');
             $table->string('image_url');
 

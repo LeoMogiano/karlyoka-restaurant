@@ -19,7 +19,6 @@ class CreateOrUpdate extends Component
         'product.nombre' => 'required|string|max:30',
         'product.descripcion' => 'required|string|max:50',
         'product.precio' => 'required|numeric',
-        'product.stock' => 'required|numeric',
         'product.image_url' => 'required|string',
         'product.categoria_id' => 'required|exists:categorias,id',
     ];
@@ -41,7 +40,6 @@ class CreateOrUpdate extends Component
             $this->rules['product.nombre'] = 'required|string|max:30';
             $this->rules['product.descripcion'] =  'required|string|max:50';
             $this->rules['product.precio'] =  'required|numeric';
-            $this->rules['product.stock'] =  'required|numeric';
             $this->rules['product.image_url'] =  'required|string';
             $this->rules['product.categoria_id'] =  'required|exists:categorias,id';
             
@@ -74,7 +72,6 @@ class CreateOrUpdate extends Component
         $this->product->nombre = ''; 
         $this->product->descripcion = ''; 
         $this->product->precio = '';
-        $this->product->stock = '';
         $this->product->image_url = '';
         $this->product->categoria_id = '';
     }

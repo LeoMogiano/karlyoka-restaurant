@@ -21,11 +21,11 @@
                     <x-input type="number" wire:model="product.precio"></x-input>
                     @error('product.precio') <span class="error">{{ $message }}</span> @enderror
                 </div>
-                <div>
+{{--                 <div>
                     <x-label value="Stock"></x-label>
                     <x-input type="number" wire:model="product.stock"></x-input>
                     @error('product.stock') <span class="error">{{ $message }}</span> @enderror
-                </div>
+                </div> --}}
                 <div>
                     <x-label value="Imagen"></x-label>
                     <x-input type="text" wire:model="product.image_url"></x-input>
