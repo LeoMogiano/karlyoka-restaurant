@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Categories;
 
-use App\Enums\ActionType;
+use App\enums\ActionType;
 use App\Models\Categoria;
 use Livewire\Component;
 
@@ -60,8 +60,6 @@ class CreateOrUpdate extends Component
         $this->resetErrorBag();
         $this->category = new Categoria();
         $this->category->nombre = ''; 
-        $this->category->descripcion = ''; 
-        
+        $this->category->descripcion = '';    
     }
-
 }

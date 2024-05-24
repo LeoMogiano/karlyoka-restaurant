@@ -2,8 +2,8 @@
 
 namespace App\Http\Livewire\Orders;
 
-use App\Enums\ActionType;
 use App\Models\Factura;
+use App\enums\ActionType;
 use App\Models\Pedido;
 use App\Models\Producto;
 use Illuminate\Notifications\Action;
@@ -103,7 +103,7 @@ class CreateOrUpdate extends Component
         $this->emit('order-loaded');
         $this->resetFields();
         ///here we create de invoice
-       
+
         $this->emit('create-invoice', $preOrder->id);
     }
 
