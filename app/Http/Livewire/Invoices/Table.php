@@ -11,14 +11,7 @@ class Table extends Component
 {
     //use WithParent;
 
-    public $columns = [
-        "nit/ci",
-        "nombre",
-        "fecha emision",
-        "nro pedido",
-        "Total del Pedido",
-        "Descargar"
-    ];
+    public $columns = ['nit/ci', 'nombre', 'fecha emision', 'nro pedido', 'Total del Pedido', 'Descargar'];
 
     public $invoices = [];
     public $confirmDeletionIsOpen = false;
@@ -27,21 +20,23 @@ class Table extends Component
     protected $listeners = [
         'invoice-saved' => 'mount',
         'invoice-search' => 'searchInvoices',
-        'download-invoice' => 'downloadInvoice'
-       // 'open-form' => 'karla'
+        'download-invoice' => 'downloadInvoice',
+        // 'open-form' => 'karla'
     ];
-   
-    public function searchInvoices($searchText) {
+
+    public function searchInvoices($searchText)
+    {
         $this->mount($searchText);
     }
 
     public function mount($searchText = null)
     {
         $this->invoices = Factura::when($searchText, function ($query) use ($searchText) {
-            return $query->where('nit', 'like', '%' . $searchText . '%')
-                         ->orWhere('nombre', 'like', '%' . $searchText . '%')
-                         ->orWhere('fecha_emision', 'like', '%' . $searchText . '%')
-                         ->orWhere('nro_pedido', 'like', '%' . $searchText . '%');
+            return $query
+                ->where('nit', 'like', '%' . $searchText . '%')
+                ->orWhere('nombre', 'like', '%' . $searchText . '%')
+                ->orWhere('fecha_emision', 'like', '%' . $searchText . '%')
+                ->orWhere('nro_pedido', 'like', '%' . $searchText . '%');
         })->get();
     }
 
@@ -63,24 +58,20 @@ class Table extends Component
         $this->confirmDeletionIsOpen = false;
     }
 
+    // // //     public function karla($invoiceId)
+    // // // {
 
-// // //     public function karla($invoiceId)
-// // // {
+    // // //    // $this->getParentProperty()->loadInvoiceDetails($invoiceId);
 
-// // //    // $this->getParentProperty()->loadInvoiceDetails($invoiceId);
+    // // //    $this->dispatchBrowserEvent('load-invoice-details', ['invoiceId' => $invoiceId]);
 
-// // //    $this->dispatchBrowserEvent('load-invoice-details', ['invoiceId' => $invoiceId]);
+    // // //     $this->emit('show-invoice-details', $invoiceId);
 
-
-
-// // //     $this->emit('show-invoice-details', $invoiceId);
-
-// // //     // Busca la factura por su ID y la asigna a la propiedad $invoice
-// // //     //$this->invoice = Factura::findOrFail($invoiceId);
-// // //     // Mensaje de depuración
-// // //     dd('Detalles de factura cargados para ID de factura erorrr: ' . $invoiceId);
-// // // }
-
+    // // //     // Busca la factura por su ID y la asigna a la propiedad $invoice
+    // // //     //$this->invoice = Factura::findOrFail($invoiceId);
+    // // //     // Mensaje de depuración
+    // // //     dd('Detalles de factura cargados para ID de factura erorrr: ' . $invoiceId);
+    // // // }
 
     // // //   // Método para emitir el evento 'show-invoice-details' con el ID de la factura seleccionada
     // // //   public function showInvoiceDetails($invoiceId)
@@ -88,31 +79,18 @@ class Table extends Component
     // // //     $this->emit('show-invoice-details', $invoiceId);
     // // //   }
 
-
     public function downloadInvoice($invoiceId)
     {
         // $invoice = Factura::with('pedido_id')->findOrFail($invoiceId);
         $invoice = Factura::where('id', $invoiceId)->firstOrFail();
-        $pedido=$invoice->pedido;
-           // Obtener los datos adicionales necesarios (por ejemplo, cliente, insumos, servicios, etc.)
-           $cliente = $invoice->pedido->user; // Suponiendo que el cliente está asociado al pedido
-           $insumos = $invoice->pedido->productos; // Suponiendo que los insumos están asociados al pedido
-           $servicios = []; // Obtener los servicios asociados a la factura
-
-// dd($pedido);
-        // $pdf = pdf::loadView('pdf.invoice', compact('invoice'));
-        $pdf = pdf::loadView('pdf.invoice', compact('invoice','pedido', 'cliente', 'insumos', 'servicios'));
-
-
-
-        // $pdf = Pdf::loadView('livewire.invoices.table');
-
-        //dd("en dowload pedido pdf", $pdf);
-        return response()->streamDownload(function() use ($pdf) {
+        $pedido = $invoice->pedido;
+        // Obtener los datos adicionales necesarios (por ejemplo, cliente, insumos, servicios, etc.)
+        $productos = $invoice->pedido->productos; // Suponiendo que los insumos están asociados al pedido
+        $pdf = pdf::loadView('pdf.invoice', compact('invoice', 'pedido', 'productos'));
+        return response()->streamDownload(function () use ($pdf) {
             echo $pdf->stream();
         }, 'factura_' . $invoice->id . '.pdf');
     }
-
 
     public function render()
     {
