@@ -8,7 +8,7 @@
             </x-button>
             
         </div>
-        <x-input wire:input="$emit('order-loaded', $event.target.value)" type="search" placeholder="Buscar por nombre o descripción" class="w-full ml-2 border border-gray-300 rounded"></x-input>
+        <x-input wire:input="$emit('order-loaded', $event.target.value)" type="search" placeholder="Buscar por nro de pedido o fecha" class="w-full ml-2 border border-gray-300 rounded"></x-input>
     </div>
   
     <livewire:orders.table />

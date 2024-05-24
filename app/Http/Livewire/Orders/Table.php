@@ -37,27 +37,29 @@ class Table extends Component
     }
 
     public function deleteOrders($order)
-{
-    if(!$this->confirmDeletionIsOpen) {
-        $this->confirmDeletionIsOpen = true;
-        $this->orderSelected = $order;
-        return;
-    } else {
-        // Buscar el pedido en la base de datos antes de eliminarlo
-        $orderToDelete = Pedido::find($this->orderSelected['id']);
+    {
+    
+        if(!$this->confirmDeletionIsOpen) {
+            $this->confirmDeletionIsOpen = true;
+            $this->orderSelected = $order;
+            return;
+        } else {
+            // Buscar el pedido en la base de datos antes de eliminarlo
         
-        if ($orderToDelete) {
-            $orderToDelete->delete();
+            $orderToDelete = Pedido::find($this->orderSelected['id']);
+            
+            if ($orderToDelete) {
+                $orderToDelete->delete();
+            }
+            
+            $this->orders = $this->orders->reject(function ($item) use ($orderToDelete) {
+                return $item['id'] ==  $orderToDelete->id;
+            });
+        
+            $this->orderSelected = new Pedido();
+            $this->confirmDeletionIsOpen = false;
         }
-        
-        $this->orders = $this->orders->reject(function ($item) use ($orderToDelete) {
-            return $item['id'] ==  $orderToDelete->id;
-        });
-
-        $this->orderSelected = null;
-        $this->confirmDeletionIsOpen = false;
     }
-}
 
 
     public function render()

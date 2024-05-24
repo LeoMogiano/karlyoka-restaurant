@@ -26,8 +26,7 @@ class Table extends Component
 
     public function mount($searchText = null)
     {
-        
-
+    
         $this->products =  Producto::with('categoria')->when($searchText, function ($query, $searchText) {
             return $query->where('nombre', 'like', "%$searchText%")
                 ->orWhere('descripcion', 'like', "%$searchText%")
@@ -47,13 +46,14 @@ class Table extends Component
             $this->productSelected = $product;
             return;
         } else {
-            Producto::destroy($product->id);
+            
+            Producto::destroy($product);
 
             $this->products = $this->products->reject(function ($item) use ($product) {
-                return $item->id == $product->id;
+                return $item->id == $product;
             });
 
-            $this->categorySelected = null;
+           
             $this->confirmDeletionIsOpen = false;
         }
 

@@ -109,7 +109,7 @@ class CreateOrUpdate extends Component
         if ($orderId) {
             $this->order = Pedido::find($orderId);
             $this->action = ActionType::Update->value;       
-            $this->pedido_productos = Pedido::with('productos')->find($orderId)->productos->pluck('pivot.cantidad', 'id')->toArray();
+            $this->pedido_productos = $this->order->productos->pluck('cantidad', 'id')->toArray();
 
         } else {
             $this->order = new Pedido();
