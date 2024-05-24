@@ -35,8 +35,7 @@ class Table extends Component
             return $query
                 ->where('nit', 'like', '%' . $searchText . '%')
                 ->orWhere('nombre', 'like', '%' . $searchText . '%')
-                ->orWhere('fecha_emision', 'like', '%' . $searchText . '%')
-                ->orWhere('nro_pedido', 'like', '%' . $searchText . '%');
+                ->orWhere('fecha_emision', 'like', '%' . $searchText . '%');
         })->get();
     }
 
