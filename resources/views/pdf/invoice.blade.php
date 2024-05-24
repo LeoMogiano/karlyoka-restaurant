@@ -148,7 +148,7 @@
             {{-- <img src="{{ public_path('/assets/images/logo.jpg') }}" alt="generic business logo" height="181" width="167" /> --}}
         </div>
         <div class="invoiceNbr">
-            BOLETA DE FACTURA #{{ $invoice->id }}
+            FACTURA #{{ $invoice->id }}
             <br />
             <span style="font-size: 20px;">Fecha de invoice:
                 {{ \Carbon\Carbon::parse($invoice->fecha_emision)->format('d-m-Y') }}</span>
@@ -160,13 +160,12 @@
         <div class="fromtocontent">
             <span>Karlyoka Food</span><br />
             <span>Av. Banzer - 3er Anillo Interno</span><br />
-            <span>Since 2000</span><br />
         </div>
     </div>
     <div class="fromto to">
         <div class="panel">CLIENTE</div>
         <div class="fromtocontent">
-            <span>{{ $cliente->name ." ". $cliente->apellidos }}</span>
+            <span>{{ $invoice->nombre}}</span>
         </div>
     </div>
 
