@@ -93,7 +93,7 @@ class Table extends Component
     {
         // $invoice = Factura::with('pedido_id')->findOrFail($invoiceId);
         $invoice = Factura::where('id', $invoiceId)->firstOrFail();
-$pedido=$invoice->pedido;
+        $pedido=$invoice->pedido;
            // Obtener los datos adicionales necesarios (por ejemplo, cliente, insumos, servicios, etc.)
            $cliente = $invoice->pedido->user; // Suponiendo que el cliente está asociado al pedido
            $insumos = $invoice->pedido->productos; // Suponiendo que los insumos están asociados al pedido

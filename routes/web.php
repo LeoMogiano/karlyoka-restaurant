@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,4 +58,24 @@ Route::middleware([
     'verified'
 ])->get('/invoices', \App\Http\Livewire\Invoices\View::class)->name('invoices');
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->get('/invoices/{invoice}/download', function ($invoiceId) {
+    $invoice = \App\Models\Factura::where('id', $invoiceId)->firstOrFail();
+    
+    $pedido = $invoice->pedido;
+    $cliente = $invoice->pedido->user; 
+    $insumos = $invoice->pedido->productos; 
+    $servicios = [];
+
+    $pdf = PDF::loadView('pdf.invoice', compact('invoice','pedido', 'cliente', 'insumos', 'servicios'));
+   
+    return $pdf->download('factura_' . $invoice->id . '.pdf');
+})->name('invoices.download');
+
+
+//
 

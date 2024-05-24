@@ -8,5 +8,4 @@
     </div>
   
     <livewire:invoices.table />
-    <livewire:invoices.show />
 </div>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Users;
 
-use App\Enums\ActionType;
+use App\enums\ActionType;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;

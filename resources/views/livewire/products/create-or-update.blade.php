@@ -8,12 +8,12 @@
             <form class="flex flex-col gap-2">
                 <div>
                     <x-label value="Nombre"></x-label>
-                    <x-input type="text" wire:model="product.nombre"></x-input>
+                    <x-input type="text" wire:model="product.nombre" maxlength="30"></x-input>
                     @error('product.nombre') <span class="error">{{ $message }}</span> @enderror
                 </div>
                 <div>
                     <x-label value="Descripción"></x-label>
-                    <x-input type="text" wire:model="product.descripcion"></x-input>
+                    <x-input type="text" wire:model="product.descripcion" maxlength="50"></x-input>
                     @error('product.descripcion') <span class="error">{{ $message }}</span> @enderror
                 </div>
                 <div>

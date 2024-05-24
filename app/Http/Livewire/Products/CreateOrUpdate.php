@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Products;
 
-use App\Enums\ActionType;
+use App\enums\ActionType;
 use App\Models\Categoria;
 use App\Models\Producto;
 use Livewire\Component;
@@ -16,8 +16,8 @@ class CreateOrUpdate extends Component
 
     protected $listeners = ['open-form' => 'openForm'];
     protected $rules = [
-        'product.nombre' => 'required|string|max:50',
-        'product.descripcion' => 'required|string|max:255',
+        'product.nombre' => 'required|string|max:30',
+        'product.descripcion' => 'required|string|max:50',
         'product.precio' => 'required|numeric',
         'product.stock' => 'required|numeric',
         'product.image_url' => 'required|string',
@@ -38,8 +38,8 @@ class CreateOrUpdate extends Component
     public function save()
     {
         if ($this->action == ActionType::Update->value && $this->product->id) {
-            $this->rules['product.nombre'] =  'required|string|max:50|unique:productos,nombre,'.$this->product->id;
-            $this->rules['product.descripcion'] =  'required|string|max:255';
+            $this->rules['product.nombre'] = 'required|string|max:30';
+            $this->rules['product.descripcion'] =  'required|string|max:50';
             $this->rules['product.precio'] =  'required|numeric';
             $this->rules['product.stock'] =  'required|numeric';
             $this->rules['product.image_url'] =  'required|string';
