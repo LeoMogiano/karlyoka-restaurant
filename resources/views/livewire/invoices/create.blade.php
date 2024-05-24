@@ -24,7 +24,7 @@
                 <x-secondary-button wire:click="$toggle('isOpen')" wire:loading.attr="disabled">
                     Cerrar
                 </x-secondary-button>
-                <x-button wire:click="createInvoice" wire:loading.attr="disabled">
+                <x-button wire:click="createInvoice(true)" wire:loading.attr="disabled">
                     Imprimir Factura
                 </x-button>
                 <x-button wire:click="createInvoice" wire:loading.attr="disabled">
