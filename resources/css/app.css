@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    table {
+        @apply table-auto w-full
+    }
+    thead {
+        @apply text-xs font-semibold uppercase text-gray-400 bg-gray-50
+    }
+    th {
+        @apply p-2 whitespace-nowrap font-semibold text-left
+    }
+
+    td {
+        @apply p-2 whitespace-nowrap
+    }
+
+    select {
+        @apply w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm
+    }
+}
+
+@layer components {
+    .table {
+        @apply w-full bg-white shadow-lg rounded-md border border-gray-200 p-3
+    }
+
+    .error {
+        @apply text-red-500
+    }
+}
