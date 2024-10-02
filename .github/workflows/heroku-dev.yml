@@ -14,25 +14,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'  # Cambia esto a la versión de PHP que usas
-          extensions: mbstring, xml, bcmath, curl, zip
+    - name: Create .netrc file for Heroku authentication
+      run: |
+        echo "machine api.heroku.com" >> ~/.netrc
+        echo "    login leomogiano@outlook.com" >> ~/.netrc
+        echo "    password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
+        echo "machine git.heroku.com" >> ~/.netrc
+        echo "    login leomogiano@outlook.com" >> ~/.netrc
+        echo "    password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
+        chmod 600 ~/.netrc
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'  # Cambia esto a la versión de Node.js que usas
+    - name: Install Heroku CLI
+      run: |
+        curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
+    - name: Set Heroku remote
+      run: |
+        heroku git:remote -a karlyoka-web-dev  # Reemplaza con el nombre de tu app en Heroku
 
-      - name: Install Node.js dependencies
-        run: npm install  # O `yarn install` si usas Yarn
-
-      - name: Compile assets
-        run: npm run build  # O el comando que uses para compilar tus activos
+    - name: Deploy to Heroku
+      run: |
+        git push heroku HEAD:refs/heads/main --force  # Cambia `main` si tu rama es diferente
 
 #      - name: Generate application key
 #        run: php artisan key:generate --no-interaction
@@ -43,10 +45,10 @@ jobs:
       #- name: Seed database
       #  run: php artisan db:seed --force  # Ejecuta la siembra de datos
 
-      - name: Deploy to Heroku
-        uses: akhileshns/heroku-deploy@v3.13.15
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: karlyoka-web-dev # Reemplaza con el nombre de tu app en Heroku
-          heroku_email: leomogiano@outlook.com  # Reemplaza con tu email de Heroku
+#      - name: Deploy to Heroku
+#        uses: akhileshns/heroku-deploy@v3.13.15
+#        with:
+#          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+#          heroku_app_name: karlyoka-web-dev # Reemplaza con el nombre de tu app en Heroku
+#          heroku_email: leomogiano@outlook.com  # Reemplaza con tu email de Heroku
 
