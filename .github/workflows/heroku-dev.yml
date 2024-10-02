@@ -1,0 +1,51 @@
+name: DEV Deploy Laravel to Heroku
+
+on:
+  push:
+    branches:
+      - dev  # Cambia esto al nombre de tu rama de desarrollo
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'  # Cambia esto a la versión de PHP que usas
+          extensions: mbstring, xml, bcmath, curl, zip
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  # Cambia esto a la versión de Node.js que usas
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
+
+      - name: Install Node.js dependencies
+        run: npm install  # O `yarn install` si usas Yarn
+
+      - name: Compile assets
+        run: npm run prod  # O el comando que uses para compilar tus activos
+
+      - name: Generate application key
+        run: php artisan key:generate --no-interaction
+
+      - name: Run database migrations
+        run: php artisan migrate --force
+
+      #- name: Seed database
+      #  run: php artisan db:seed --force  # Ejecuta la siembra de datos
+
+     # - name: Deploy to Heroku
+      #  uses: akhileshns/heroku-deploy@v3.13.15
+       # with:
+        #  heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+         # heroku_app_name: your-app-name  # Reemplaza con el nombre de tu app en Heroku
+          #heroku_email: your-email@example.com  # Reemplaza con tu email de Heroku
+
