@@ -32,7 +32,7 @@ jobs:
         env:
           HEROKU_APP_NAME: karlyoka-web-dev
       - name: Push to Heroku
-        run: git push heroku HEAD:main
+        run: git push heroku HEAD:main --force
 
 #      - name: Push to Heroku
 #        run: git push -f https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/karlyoka-web-dev.git HEAD:main --force
