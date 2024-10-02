@@ -25,7 +25,7 @@ jobs:
               password $HEROKU_API_KEY
           EOF
         env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_API_KEY: 2e25e507-ccd4-4a85-9b1a-a140b7814cb2 #${{ secrets.HEROKU_API_KEY }}
           HEROKU_EMAIL: leomogiano@outlook.com
       - name: Add Heroku remote
         run: heroku git:remote --app $HEROKU_APP_NAME
