@@ -40,7 +40,7 @@ jobs:
 
       - name: 'Login to Heroku'
         run: |
-          heroku auth:token "${{ secrets.HEROKU_API_KEY }}"
+          heroku auth:token "2e25e507-ccd4-4a85-9b1a-a140b7814cb2"
           heroku git:remote -a karlyoka-web-dev
 
       - name: 'Deploy to Heroku'
