@@ -39,10 +39,8 @@ jobs:
           curl https://cli-assets.heroku.com/install.sh | sh
 
       - name: 'Login to Heroku'
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          echo "${{ secrets.HEROKU_API_KEY }}" | heroku auth:token
+          heroku auth:token "${{ secrets.HEROKU_API_KEY }}"
           heroku git:remote -a karlyoka-web-dev
 
       - name: 'Deploy to Heroku'
