@@ -32,7 +32,7 @@ jobs:
         run: npm install  # O `yarn install` si usas Yarn
 
       - name: Compile assets
-        run: npm run prod  # O el comando que uses para compilar tus activos
+        run: npm run build  # O el comando que uses para compilar tus activos
 
       - name: Generate application key
         run: php artisan key:generate --no-interaction
