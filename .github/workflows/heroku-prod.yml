@@ -1,4 +1,4 @@
-name: DEV Deploy Laravel to Heroku
+name: PROD Deploy Laravel to Heroku
 
 on:
   push:

@@ -34,19 +34,19 @@ jobs:
       - name: Compile assets
         run: npm run build  # O el comando que uses para compilar tus activos
 
-      - name: Generate application key
-        run: php artisan key:generate --no-interaction
+#      - name: Generate application key
+#        run: php artisan key:generate --no-interaction
 
-      - name: Run database migrations
-        run: php artisan migrate --force
+#      - name: Run database migrations
+#        run: php artisan migrate --force
 
       #- name: Seed database
       #  run: php artisan db:seed --force  # Ejecuta la siembra de datos
 
-     # - name: Deploy to Heroku
-      #  uses: akhileshns/heroku-deploy@v3.13.15
-       # with:
-        #  heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-         # heroku_app_name: your-app-name  # Reemplaza con el nombre de tu app en Heroku
-          #heroku_email: your-email@example.com  # Reemplaza con tu email de Heroku
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.13.15
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: karlyoka-web-dev # Reemplaza con el nombre de tu app en Heroku
+          heroku_email: leomogiano@outlook.com  # Reemplaza con tu email de Heroku
 
