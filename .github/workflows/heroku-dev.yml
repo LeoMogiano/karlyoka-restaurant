@@ -3,7 +3,7 @@ name: DEV Deploy Laravel to Heroku
 on:
   push:
     branches:
-      - dev  # Cambia esto al nombre de tu rama de desarrollo
+      - dev
   workflow_dispatch:
 
 jobs:
@@ -14,22 +14,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-#      - name: Push to Heroku
-#        run: git push -f https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/karlyoka-web-dev.git HEAD:main --force
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, xml, bcmath, curl, zip
 
-#      - name: Generate application key
-#        run: php artisan key:generate --no-interaction
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-#      - name: Run database migrations
-#        run: php artisan migrate --force
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
-      #- name: Seed database
-      #  run: php artisan db:seed --force  # Ejecuta la siembra de datos
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Compile assets
+        run: npm run build
 
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.13.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: karlyoka-web-dev # Reemplaza con el nombre de tu app en Heroku
-          heroku_email: leomogiano@outlook.com  # Reemplaza con tu email de Heroku
-
+          heroku_app_name: karlyoka-web-dev
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
