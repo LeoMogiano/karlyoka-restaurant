@@ -34,18 +34,6 @@ jobs:
       - name: Compile assets
         run: npm run build  # O el comando que uses para compilar tus activos
 
-      - name: 'Install Heroku CLI'
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-
-      - name: 'Login to Heroku'
-        run: |
-          heroku auth:token "2e25e507-ccd4-4a85-9b1a-a140b7814cb2"
-          heroku git:remote -a karlyoka-web-dev
-
-      - name: 'Deploy to Heroku'
-        run: |
-          git push heroku main
 #      - name: Generate application key
 #        run: php artisan key:generate --no-interaction
 
@@ -55,10 +43,10 @@ jobs:
       #- name: Seed database
       #  run: php artisan db:seed --force  # Ejecuta la siembra de datos
 
-#      - name: Deploy to Heroku
-#        uses: akhileshns/heroku-deploy@v3.13.15
-#        with:
-#          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-#          heroku_app_name: karlyoka-web-dev # Reemplaza con el nombre de tu app en Heroku
-#          heroku_email: leomogiano@outlook.com  # Reemplaza con tu email de Heroku
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.13.15
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: karlyoka-web-dev # Reemplaza con el nombre de tu app en Heroku
+          heroku_email: leomogiano@outlook.com  # Reemplaza con tu email de Heroku
 
