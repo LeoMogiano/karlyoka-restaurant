@@ -14,27 +14,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-    - name: Create .netrc file for Heroku authentication
-      run: |
-        echo "machine api.heroku.com" >> ~/.netrc
-        echo "    login leomogiano@outlook.com" >> ~/.netrc
-        echo "    password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
-        echo "machine git.heroku.com" >> ~/.netrc
-        echo "    login leomogiano@outlook.com" >> ~/.netrc
-        echo "    password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
-        chmod 600 ~/.netrc
+      - name: Create .netrc file for Heroku authentication
+        run: |
+          echo "machine api.heroku.com" >> ~/.netrc
+          echo "    login leomogiano@outlook.com" >> ~/.netrc
+          echo "    password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
+          echo "machine git.heroku.com" >> ~/.netrc
+          echo "    login leomogiano@outlook.com" >> ~/.netrc
+          echo "    password ${{ secrets.HEROKU_API_KEY }}" >> ~/.netrc
+          chmod 600 ~/.netrc
 
-    - name: Install Heroku CLI
-      run: |
-        curl https://cli-assets.heroku.com/install.sh | sh
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
 
-    - name: Set Heroku remote
-      run: |
-        heroku git:remote -a karlyoka-web-dev  # Reemplaza con el nombre de tu app en Heroku
+      - name: Set Heroku remote
+        run: |
+          heroku git:remote -a karlyoka-web-dev  # Reemplaza con el nombre de tu app en Heroku
 
-    - name: Deploy to Heroku
-      run: |
-        git push heroku HEAD:refs/heads/main --force  # Cambia `main` si tu rama es diferente
+      - name: Deploy to Heroku
+        run: |
+          git push heroku HEAD:refs/heads/main --force  # Cambia `main` si tu rama es diferente
 
 #      - name: Generate application key
 #        run: php artisan key:generate --no-interaction
