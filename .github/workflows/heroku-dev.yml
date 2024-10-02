@@ -29,7 +29,7 @@ jobs:
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.13.15
         with:
-          heroku_api_key: 2e25e507-ccd4-4a85-9b1a-a140b7814cb2 #${{ secrets.HEROKU_API_KEY }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: karlyoka-web-dev # Reemplaza con el nombre de tu app en Heroku
           heroku_email: leomogiano@outlook.com  # Reemplaza con tu email de Heroku
 
