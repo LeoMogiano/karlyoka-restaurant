@@ -37,7 +37,7 @@ jobs:
   test-e2e-dev:
     needs: check-dependencies
     runs-on: ubuntu-latest
-    name: Test E2E in last Dev Deployment
+    name: Test E2E in the latest deployment in development
     defaults:
       run:
         working-directory: ui-test
