@@ -1,16 +1,17 @@
 import { faker } from "@faker-js/faker";
 
-export function ordersActions() {
-	cy.get(':nth-child(6) > .inline-flex').click();
-	cy.wait(2000);
-	cancelCreate();
-	confirmCreate();
-	// cy.wait(1000);
-	// update();
-	// cy.wait(1000);
-	// confirmEliminar();
-	search();
-}
+describe("Orders test", () => {
+	before(() =>cy.login());
+	
+	it("page orders", () => {
+		cy.get(':nth-child(6) > .inline-flex').click(); cy.wait(2000);
+		cancelCreate(); cy.wait(1000);
+		confirmCreate(); cy.wait(1000);
+		// update(); cy.wait(1000);
+		// confirmEliminar(); cy.wait(1000);
+		search();
+	})
+});
 
 function cancelCreate() {
 	cy.get('.lg\\:w-3\\/5 > :nth-child(1) > .flex > .inline-flex').click();
@@ -28,7 +29,7 @@ function confirmCreate() {
 	for(let order = 0; order < 10; order++){
 		cy.get('.flex-col > :nth-child(2) > .flex > :nth-child(3)').click();
 	}
-	for(let order = 0; order < 50; order++){
+	for(let order = 0; order < 20; order++){
 		cy.get(':nth-child(3) > .flex > :nth-child(3)').click();
 	}
 	cy.get('.flex-row > .justify-between > .flex > .bg-gray-800').click();
