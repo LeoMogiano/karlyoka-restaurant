@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "cypress run --headless"
+    "test": "cypress run"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.0.3",
