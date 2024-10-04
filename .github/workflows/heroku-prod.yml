@@ -58,7 +58,7 @@ jobs:
           WEB_URL: https://karlyoka-web-prod-fd1bdc9208dc.herokuapp.com         
         run: npm run test        
   deployment:
-    needs: check-dependencies
+    needs: test-e2e-dev
     runs-on: ubuntu-latest
     name: Deployment
     steps:
@@ -73,7 +73,7 @@ jobs:
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
           
   test-e2e:
-    needs: test-e2e-dev
+    needs: deployment
     runs-on: ubuntu-latest
     name: Test E2E 
     defaults:
