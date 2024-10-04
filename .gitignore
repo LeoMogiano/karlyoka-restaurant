@@ -16,3 +16,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/ui-test/node_modules
