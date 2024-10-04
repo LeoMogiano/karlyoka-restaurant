@@ -16,7 +16,7 @@ function create() {
 	for (const category of categories()) {
 		cy.get('.lg\\:w-3\\/5 > .justify-between > .flex > .inline-flex').click();
 		
-		if(category.name === "") {
+		if(category.name == "") {
 			cy.get('.space-x-2 > .bg-white').click();
 		}else{
 			cy.get('.mt-4 > .flex > :nth-child(1) > .w-full').type(category.name); cy.wait(1000);
