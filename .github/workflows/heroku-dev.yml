@@ -51,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: tests
+        working-directory: ui-test
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
