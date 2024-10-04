@@ -55,7 +55,7 @@ jobs:
         
       - name: Run Tests
         env:
-          WEB_URL: https://karlyoka-web-prod-fd1bdc9208dc.herokuapp.com         
+          WEB_URL: https://karlyoka-web-dev-cceae6c2c95c.herokuapp.com      
         run: npm run test        
   deployment:
     needs: test-e2e-dev
