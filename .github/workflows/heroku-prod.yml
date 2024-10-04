@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  check-dependencies:
     runs-on: ubuntu-latest
-
+    name: Check dependencies
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,9 +34,64 @@ jobs:
       - name: Compile assets
         run: npm run build
 
+  test-e2e-dev:
+    needs: check-dependencies
+    runs-on: ubuntu-latest
+    name: Test E2E in last Dev Deployment
+    defaults:
+      run:
+        working-directory: ui-test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Node.js dependencies
+        run: npm install
+        
+      - name: Run Tests
+        env:
+          WEB_URL: https://karlyoka-web-prod-fd1bdc9208dc.herokuapp.com         
+        run: npm run test        
+  deployment:
+    needs: check-dependencies
+    runs-on: ubuntu-latest
+    name: Deployment
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Deploy to Heroku
         uses: akhileshns/heroku-deploy@v3.13.15
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: karlyoka-web-dev
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          
+  test-e2e:
+    needs: test-e2e-dev
+    runs-on: ubuntu-latest
+    name: Test E2E 
+    defaults:
+      run:
+        working-directory: ui-test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Node.js dependencies
+        run: npm install
+        
+      - name: Run Tests
+        env:
+          WEB_URL: https://karlyoka-web-prod-fd1bdc9208dc.herokuapp.com         
+        run: npm run test
