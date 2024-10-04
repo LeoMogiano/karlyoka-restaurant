@@ -9,7 +9,7 @@ on:
 jobs:
   check-dependencies:
     runs-on: ubuntu-latest
-
+    name: Check dependencies
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -36,6 +36,7 @@ jobs:
   deploy:
     needs: check-dependencies
     runs-on: ubuntu-latest
+    name: Deployment
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -49,6 +50,7 @@ jobs:
   test-e2e:
     needs: deploy
     runs-on: ubuntu-latest
+    name: Test E2E
     defaults:
       run:
         working-directory: ui-test
