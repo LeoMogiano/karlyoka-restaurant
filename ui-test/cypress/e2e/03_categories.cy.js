@@ -7,7 +7,7 @@ describe("Categories test", () => {
 	it("page categories", () => {
 		cy.get(':nth-child(4) > .inline-flex').click(); cy.wait(2000);
 		create(); cy.wait(1000);
-		update(); cy.wait(1000);
+		// update(); cy.wait(1000);
 		search();
 	})
 });

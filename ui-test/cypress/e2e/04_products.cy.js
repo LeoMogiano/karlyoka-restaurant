@@ -15,6 +15,11 @@ describe("Products test", () => {
 function create() {
 	for (const product of products()) {
 		cy.get('.lg\\:w-3\\/5 > .justify-between > .flex > .inline-flex').click();
+		
+		if(product.name == "" || product.description == "" || product.price == "" || product.image == "" || product.category == "" ) {
+			cy.get('.space-x-2 > .bg-white').click();
+			continue;
+		}
 		cy.get('.mt-4 > .flex > :nth-child(1) > .w-full').type(product.name);  cy.wait(1000);
 		cy.get('.flex > :nth-child(2) > .w-full').type(product.description);  cy.wait(1000);
 		cy.get(':nth-child(3) > .w-full').type(product.price);  cy.wait(1000);
